@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>MM2 Value Calculator</title>
+  <meta name="description" content="Screenshot your Murder Mystery 2 items and get their total value. Values sync automatically from MM2Values.com.">
+  <meta name="theme-color" content="#0f1117">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <h1>MM2 Value Calculator</h1>
+      <p id="status" class="status">Loading values…</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Total -->
+    <section class="card total-card" aria-live="polite">
+      <div class="total-main">
+        <div>
+          <div class="label">Total value</div>
+          <div id="total" class="total">0</div>
+          <div id="totalSub" class="muted small">No items yet</div>
+        </div>
+        <button id="clearBtn" class="ghost" type="button" hidden>Clear all</button>
+      </div>
+      <div id="chips" class="chips"></div>
+    </section>
+
+    <!-- Scan -->
+    <section class="card">
+      <h2>Scan a screenshot</h2>
+      <label id="drop" class="drop" for="file">
+        <input id="file" type="file" accept="image/*" hidden>
+        <span class="drop-big">📷 Tap to choose a screenshot</span>
+        <span class="muted small">…or drag it here, or paste it (Ctrl/⌘+V). Every item and count is found for you.</span>
+      </label>
+      <div id="shotArea" hidden>
+        <div class="canvas-wrap"><canvas id="shot"></canvas></div>
+        <p id="scanMsg" class="scan-msg"></p>
+        <div class="row">
+          <button id="anotherBtn" class="primary" type="button">Scan another screenshot</button>
+          <button id="missedBtn" class="ghost" type="button">Add a missed item</button>
+        </div>
+        <p id="drawHint" class="hint" hidden>Drag a box around the missed item.
+          <button id="cancelDrawBtn" type="button" class="link">Cancel</button></p>
+      </div>
+    </section>
+
+    <!-- Chat -->
+    <section class="card chat-card">
+      <h2>Ask the calculator</h2>
+      <div id="chatLog" class="chat-log" aria-live="polite"></div>
+      <div class="chips quick">
+        <button type="button" class="chip-btn">Ignore chromas</button>
+        <button type="button" class="chip-btn">Only count godlies and ancients</button>
+        <button type="button" class="chip-btn">Count everything</button>
+        <button type="button" class="chip-btn">Top 5</button>
+        <button type="button" class="chip-btn">Breakdown</button>
+        <button type="button" class="chip-btn">Help</button>
+      </div>
+      <form id="chatForm" class="chat-form">
+        <input id="chatInput" type="text" placeholder='Try "ignore chromas" or "set Seer to 3"' autocomplete="off" enterkeyhint="send">
+        <button class="primary" type="submit">Send</button>
+      </form>
+    </section>
+
+    <!-- Items -->
+    <section class="card">
+      <div class="row between">
+        <h2>Your items</h2>
+        <span id="checkNote" class="small check-note" hidden></span>
+      </div>
+      <div id="inventory" class="inventory"><p class="muted">Scan a screenshot, or add items by name below.</p></div>
+      <div class="add-by-name">
+        <input id="search" type="search" placeholder="Add by name, e.g. Seer, Chroma Luger…" autocomplete="off">
+        <div id="searchResults" class="candidates"></div>
+      </div>
+    </section>
+
+    <!-- Changes -->
+    <section class="card">
+      <details>
+        <summary>Recent value changes</summary>
+        <div id="changes" class="changes"><p class="muted">No changes recorded yet.</p></div>
+      </details>
+    </section>
+
+    <footer class="muted small">
+      Values come from <a href="https://mm2values.com/" target="_blank" rel="noopener">MM2Values.com</a>
+      and update automatically when they change. Fan-made tool, not affiliated with MM2Values,
+      Nikilis or Roblox. Screenshots are read on your device and never uploaded.
+      Item recognition is automatic but not perfect: items marked <b>Check</b> are worth a look.
+    </footer>
+  </main>
+
+  <!-- Item picker (change a wrong match / pick for a missed item) -->
+  <div id="picker" class="sheet-bg" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="pickerTitle">
+      <div class="row between">
+        <h2 id="pickerTitle">Which item is it?</h2>
+        <button id="pickerClose" class="ghost" type="button" aria-label="Close">✕</button>
+      </div>
+      <canvas id="pickerCrop" class="picker-crop"></canvas>
+      <div id="pickerAlts" class="candidates"></div>
+      <input id="pickerSearch" type="search" placeholder="Not there? Search by name…" autocomplete="off">
+      <div id="pickerResults" class="candidates"></div>
+    </div>
+  </div>
+
+  <script src="match.js"></script>
+  <script src="detect.js"></script>
+  <script src="ocr.js"></script>
+  <script src="scan.js"></script>
+  <script src="store.js"></script>
+  <script src="chat.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
