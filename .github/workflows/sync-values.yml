@@ -1,0 +1,53 @@
+name: Sync MM2 values
+
+on:
+  schedule:
+    # Every 3 hours (GitHub runs these in UTC; times can drift a few minutes).
+    - cron: "17 */3 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Do a full sync even if the site's update stamp hasn't changed"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-values
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install requirements
+        run: pip install -r scraper/requirements.txt
+
+      - name: Pull latest values from MM2Values.com
+        run: |
+          if [ "${{ inputs.force }}" = "true" ]; then
+            python scraper/sync_values.py --force
+          else
+            python scraper/sync_values.py
+          fi
+
+      - name: Save changes to the repo
+        run: |
+          git config user.name "mm2-values-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+          else
+            git commit -m "Update MM2 values ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+            git push
+          fi
