@@ -1,9 +1,9 @@
 {
  "source": "MM2Values.com",
  "sourceUrl": "https://mm2values.com/",
- "siteUpdated": "11/19/2026 04:25:40pm EST",
- "lastFullSync": "2026-11-22T05:56:14+00:00",
- "lastChecked": "2026-11-22T18:57:59+00:00",
+ "siteUpdated": "11/22/2026 02:11:44pm EST",
+ "lastFullSync": "2026-11-22T21:53:21+00:00",
+ "lastChecked": "2026-11-22T21:53:21+00:00",
  "itemCount": 569,
  "categories": [
   "Ancient",
@@ -66,8 +66,8 @@
    "name": "Celestial",
    "category": "Ancient",
    "tier": "TIER 5",
-   "value": 1950,
-   "valueText": "1,950",
+   "value": 1975,
+   "valueText": "1,975",
    "range": "N/A",
    "demand": 5,
    "rarity": null,
@@ -80,9 +80,9 @@
    "name": "Vampires Axe",
    "category": "Ancient",
    "tier": "TIER 5",
-   "value": 1200,
-   "valueText": "1,200",
-   "range": "1150-1200",
+   "value": 1150,
+   "valueText": "1,150",
+   "range": "1100-1150",
    "demand": 4.5,
    "rarity": null,
    "stability": "Underpaid For",
@@ -90,27 +90,13 @@
    "image": "data/img/img-vampsaxe.png"
   },
   {
-   "id": "ancient-emberscythe",
-   "name": "Emberscythe",
-   "category": "Ancient",
-   "tier": "TIER 5",
-   "value": 685,
-   "valueText": "685",
-   "range": "660-710",
-   "demand": 5,
-   "rarity": null,
-   "stability": "Fluctuating",
-   "sourceImage": "https://mm2values.com/img/Emberscythe.png",
-   "image": "data/img/img-emberscythe.png"
-  },
-  {
    "id": "ancient-emberbow",
    "name": "Emberbow",
    "category": "Ancient",
    "tier": "TIER 5",
-   "value": 675,
-   "valueText": "675",
-   "range": "650-700",
+   "value": 625,
+   "valueText": "625",
+   "range": "600-650",
    "demand": 5,
    "rarity": null,
    "stability": "Fluctuating",
@@ -118,12 +104,26 @@
    "image": "data/img/img-emberbow.png"
   },
   {
+   "id": "ancient-emberscythe",
+   "name": "Emberscythe",
+   "category": "Ancient",
+   "tier": "TIER 5",
+   "value": 625,
+   "valueText": "625",
+   "range": "600-650",
+   "demand": 5,
+   "rarity": null,
+   "stability": "Fluctuating",
+   "sourceImage": "https://mm2values.com/img/Emberscythe.png",
+   "image": "data/img/img-emberscythe.png"
+  },
+  {
    "id": "ancient-harvester",
    "name": "Harvester",
    "category": "Ancient",
    "tier": "TIER 5",
-   "value": 290,
-   "valueText": "290",
+   "value": 305,
+   "valueText": "305",
    "range": "N/A",
    "demand": 4,
    "rarity": null,
@@ -136,8 +136,8 @@
    "name": "Icepiercer",
    "category": "Ancient",
    "tier": "TIER 4",
-   "value": 200,
-   "valueText": "200",
+   "value": 215,
+   "valueText": "215",
    "range": "N/A",
    "demand": 4,
    "rarity": null,
@@ -150,8 +150,8 @@
    "name": "Icebreaker",
    "category": "Ancient",
    "tier": "TIER 3",
-   "value": 70,
-   "valueText": "70",
+   "value": 65,
+   "valueText": "65",
    "range": "N/A",
    "demand": 2,
    "rarity": null,
@@ -1396,9 +1396,9 @@
    "name": "Chroma Evergun",
    "category": "Chroma",
    "tier": "TIER 3",
-   "value": 50000,
-   "valueText": "50,000",
-   "range": "50000-52000",
+   "value": 52000,
+   "valueText": "52,000",
+   "range": "52000-53000",
    "demand": 7,
    "rarity": null,
    "stability": "Doing Well",
@@ -1410,9 +1410,9 @@
    "name": "Chroma Evergreen",
    "category": "Chroma",
    "tier": "TIER 3",
-   "value": 36000,
-   "valueText": "36,000",
-   "range": "36000-38000",
+   "value": 41000,
+   "valueText": "41,000",
+   "range": "41000-43000",
    "demand": 7,
    "rarity": null,
    "stability": "Doing Well",
@@ -1466,8 +1466,8 @@
    "name": "Chroma Alienbeam",
    "category": "Chroma",
    "tier": "TIER 3",
-   "value": 18000,
-   "valueText": "18,000",
+   "value": 18500,
+   "valueText": "18,500",
    "range": "N/A",
    "demand": 6,
    "rarity": null,
@@ -1490,20 +1490,6 @@
    "image": "data/img/img-chromaraygun.png"
   },
   {
-   "id": "chroma-chroma-emberscythe",
-   "name": "Chroma Emberscythe",
-   "category": "Chroma",
-   "tier": "TIER 3",
-   "value": 10000,
-   "valueText": "10,000",
-   "range": "9750-10250",
-   "demand": 6,
-   "rarity": null,
-   "stability": "Fluctuating",
-   "sourceImage": "https://mm2values.com/img/Chroma_Emberscythe.png",
-   "image": "data/img/img-chroma-emberscythe.png"
-  },
-  {
    "id": "chroma-chroma-sunrise",
    "name": "Chroma Sunrise",
    "category": "Chroma",
@@ -1522,8 +1508,8 @@
    "name": "Chroma Snowcannon",
    "category": "Chroma",
    "tier": "TIER 3",
-   "value": 7650,
-   "valueText": "7,650",
+   "value": 7750,
+   "valueText": "7,750",
    "range": "N/A",
    "demand": 4,
    "rarity": null,
@@ -1532,18 +1518,18 @@
    "image": "data/img/img-chroma-snowcannon.png"
   },
   {
-   "id": "chroma-chroma-emberbow",
-   "name": "Chroma Emberbow",
+   "id": "chroma-chroma-emberscythe",
+   "name": "Chroma Emberscythe",
    "category": "Chroma",
    "tier": "TIER 3",
-   "value": 6250,
-   "valueText": "6,250",
-   "range": "6000-6500",
-   "demand": 6,
+   "value": 6000,
+   "valueText": "6,000",
+   "range": "5750-6250",
+   "demand": 5,
    "rarity": null,
    "stability": "Fluctuating",
-   "sourceImage": "https://mm2values.com/img/Chroma_Emberbow.png",
-   "image": "data/img/img-chroma-emberbow.png"
+   "sourceImage": "https://mm2values.com/img/Chroma_Emberscythe.png",
+   "image": "data/img/img-chroma-emberscythe.png"
   },
   {
    "id": "chroma-chroma-sunset",
@@ -1553,7 +1539,7 @@
    "value": 5500,
    "valueText": "5,500",
    "range": "N/A",
-   "demand": 4.5,
+   "demand": 5,
    "rarity": null,
    "stability": "Stable",
    "sourceImage": "https://mm2values.com/img/ChromaSunsetKnife.png",
@@ -1572,6 +1558,20 @@
    "stability": "Stable",
    "sourceImage": "https://mm2values.com/img/ChromaBlizzard.png",
    "image": "data/img/img-chromablizzard.png"
+  },
+  {
+   "id": "chroma-chroma-emberbow",
+   "name": "Chroma Emberbow",
+   "category": "Chroma",
+   "tier": "TIER 3",
+   "value": 5250,
+   "valueText": "5,250",
+   "range": "5000-5500",
+   "demand": 5,
+   "rarity": null,
+   "stability": "Fluctuating",
+   "sourceImage": "https://mm2values.com/img/Chroma_Emberbow.png",
+   "image": "data/img/img-chroma-emberbow.png"
   },
   {
    "id": "chroma-chroma-snowstorm",
@@ -1634,42 +1634,14 @@
    "name": "Chroma Embersickle",
    "category": "Chroma",
    "tier": "TIER 3",
-   "value": 1900,
-   "valueText": "1,900",
-   "range": "1850-1950",
+   "value": 1850,
+   "valueText": "1,850",
+   "range": "1800-1900",
    "demand": 5,
    "rarity": null,
    "stability": "Fluctuating",
    "sourceImage": "https://mm2values.com/img/Chroma_Embersickle.png",
    "image": "data/img/img-chroma-embersickle.png"
-  },
-  {
-   "id": "chroma-chroma-mortal",
-   "name": "Chroma Mortal",
-   "category": "Chroma",
-   "tier": "TIER 3",
-   "value": 1800,
-   "valueText": "1,800",
-   "range": "1700-1900",
-   "demand": 5.5,
-   "rarity": null,
-   "stability": "Fluctuating",
-   "sourceImage": "https://mm2values.com/img/chromamortal.png",
-   "image": "data/img/img-chromamortal.png"
-  },
-  {
-   "id": "chroma-chroma-immortal",
-   "name": "Chroma Immortal",
-   "category": "Chroma",
-   "tier": "TIER 3",
-   "value": 1800,
-   "valueText": "1,800",
-   "range": "1700-1900",
-   "demand": 5.5,
-   "rarity": null,
-   "stability": "Fluctuating",
-   "sourceImage": "https://mm2values.com/img/chromaimmortal.png",
-   "image": "data/img/img-chromaimmortal.png"
   },
   {
    "id": "chroma-chroma-ornament",
@@ -1690,8 +1662,8 @@
    "name": "Chroma Treat",
    "category": "Chroma",
    "tier": "TIER 3",
-   "value": 1800,
-   "valueText": "1,800",
+   "value": 1775,
+   "valueText": "1,775",
    "range": "N/A",
    "demand": 4.5,
    "rarity": null,
@@ -1704,8 +1676,8 @@
    "name": "Chroma Sweet",
    "category": "Chroma",
    "tier": "TIER 3",
-   "value": 1750,
-   "valueText": "1,750",
+   "value": 1725,
+   "valueText": "1,725",
    "range": "N/A",
    "demand": 4.5,
    "rarity": null,
@@ -1714,13 +1686,41 @@
    "image": "data/img/img-csweet.png"
   },
   {
+   "id": "chroma-chroma-mortal",
+   "name": "Chroma Mortal",
+   "category": "Chroma",
+   "tier": "TIER 3",
+   "value": 1600,
+   "valueText": "1,600",
+   "range": "N/A",
+   "demand": 5.5,
+   "rarity": null,
+   "stability": "Stable",
+   "sourceImage": "https://mm2values.com/img/chromamortal.png",
+   "image": "data/img/img-chromamortal.png"
+  },
+  {
+   "id": "chroma-chroma-immortal",
+   "name": "Chroma Immortal",
+   "category": "Chroma",
+   "tier": "TIER 3",
+   "value": 1600,
+   "valueText": "1,600",
+   "range": "N/A",
+   "demand": 5.5,
+   "rarity": null,
+   "stability": "Stable",
+   "sourceImage": "https://mm2values.com/img/chromaimmortal.png",
+   "image": "data/img/img-chromaimmortal.png"
+  },
+  {
    "id": "chroma-chroma-icecream",
    "name": "Chroma Icecream",
    "category": "Chroma",
    "tier": "TIER 3",
-   "value": 1550,
-   "valueText": "1,550",
-   "range": "1500-1550",
+   "value": 1500,
+   "valueText": "1,500",
+   "range": "1475-1500",
    "demand": 5,
    "rarity": null,
    "stability": "Underpaid For",
@@ -1732,12 +1732,12 @@
    "name": "Chroma Sands",
    "category": "Chroma",
    "tier": "TIER 3",
-   "value": 850,
-   "valueText": "850",
-   "range": "800-850",
+   "value": 800,
+   "valueText": "800",
+   "range": "N/A",
    "demand": 4,
    "rarity": null,
-   "stability": "Underpaid For",
+   "stability": "Stable",
    "sourceImage": "https://mm2values.com/img/CSands.png",
    "image": "data/img/img-csands.png"
   },
@@ -1746,12 +1746,12 @@
    "name": "Chroma Beachy",
    "category": "Chroma",
    "tier": "TIER 3",
-   "value": 800,
-   "valueText": "800",
-   "range": "750-800",
+   "value": 750,
+   "valueText": "750",
+   "range": "N/A",
    "demand": 4,
    "rarity": null,
-   "stability": "Underpaid For",
+   "stability": "Stable",
    "sourceImage": "https://mm2values.com/img/CBeachy.png",
    "image": "data/img/img-cbeachy.png"
   },
@@ -2026,9 +2026,9 @@
    "name": "Travelers Gun",
    "category": "Godly",
    "tier": "TIER 5",
-   "value": 4400,
-   "valueText": "4,400",
-   "range": "4300-4400",
+   "value": 4300,
+   "valueText": "4,300",
+   "range": "4200-4300",
    "demand": 5,
    "rarity": null,
    "stability": "Underpaid For",
@@ -2040,10 +2040,10 @@
    "name": "Evergun",
    "category": "Godly",
    "tier": "TIER 5",
-   "value": 3425,
-   "valueText": "3,425",
+   "value": 3525,
+   "valueText": "3,525",
    "range": "N/A",
-   "demand": 5,
+   "demand": 6,
    "rarity": null,
    "stability": "Stable",
    "sourceImage": "https://mm2values.com/img/Evergun.png",
@@ -2054,12 +2054,12 @@
    "name": "Evergreen",
    "category": "Godly",
    "tier": "TIER 5",
-   "value": 2725,
-   "valueText": "2,725",
-   "range": "N/A",
+   "value": 2800,
+   "valueText": "2,800",
+   "range": "2800-2850",
    "demand": 6,
    "rarity": null,
-   "stability": "Stable",
+   "stability": "Doing Well",
    "sourceImage": "https://mm2values.com/img/Evergreen.png",
    "image": "data/img/img-evergreen.png"
   },
@@ -2096,8 +2096,8 @@
    "name": "Vampires Gun",
    "category": "Godly",
    "tier": "TIER 5",
-   "value": 1900,
-   "valueText": "1,900",
+   "value": 1875,
+   "valueText": "1,875",
    "range": "N/A",
    "demand": 5,
    "rarity": null,
@@ -2208,8 +2208,8 @@
    "name": "Sunrise",
    "category": "Godly",
    "tier": "TIER 5",
-   "value": 775,
-   "valueText": "775",
+   "value": 800,
+   "valueText": "800",
    "range": "N/A",
    "demand": 4,
    "rarity": null,
@@ -2222,10 +2222,10 @@
    "name": "Bauble",
    "category": "Godly",
    "tier": "TIER 5",
-   "value": 700,
-   "valueText": "700",
+   "value": 775,
+   "valueText": "775",
    "range": "N/A",
-   "demand": 5,
+   "demand": 6,
    "rarity": null,
    "stability": "Stable",
    "sourceImage": "https://mm2values.com/img/Bauble.png",
@@ -2250,12 +2250,12 @@
    "name": "Soul",
    "category": "Godly",
    "tier": "TIER 5",
-   "value": 500,
-   "valueText": "500",
-   "range": "490-500",
+   "value": 480,
+   "valueText": "480",
+   "range": "N/A",
    "demand": 5,
    "rarity": null,
-   "stability": "Underpaid For",
+   "stability": "Stable",
    "sourceImage": "https://mm2values.com/img/soul.png",
    "image": "data/img/img-soul.png"
   },
@@ -2264,12 +2264,12 @@
    "name": "Spirit",
    "category": "Godly",
    "tier": "TIER 5",
-   "value": 490,
-   "valueText": "490",
-   "range": "480-490",
+   "value": 470,
+   "valueText": "470",
+   "range": "N/A",
    "demand": 5,
    "rarity": null,
-   "stability": "Underpaid For",
+   "stability": "Stable",
    "sourceImage": "https://mm2values.com/img/spirit.png",
    "image": "data/img/img-spirit.png"
   },
@@ -2470,6 +2470,20 @@
    "image": "data/img/img-snow-dagger.png"
   },
   {
+   "id": "godly-bat",
+   "name": "Bat",
+   "category": "Godly",
+   "tier": "TIER 4",
+   "value": 155,
+   "valueText": "155",
+   "range": "N/A",
+   "demand": 3,
+   "rarity": null,
+   "stability": "Stable",
+   "sourceImage": "https://mm2values.com/img/Bat_Zombie.png",
+   "image": "data/img/img-bat-zombie.png"
+  },
+  {
    "id": "godly-treat",
    "name": "Treat",
    "category": "Godly",
@@ -2482,20 +2496,6 @@
    "stability": "Stable",
    "sourceImage": "https://mm2values.com/img/Treat.png",
    "image": "data/img/img-treat.png"
-  },
-  {
-   "id": "godly-bat",
-   "name": "Bat",
-   "category": "Godly",
-   "tier": "TIER 4",
-   "value": 150,
-   "valueText": "150",
-   "range": "N/A",
-   "demand": 3,
-   "rarity": null,
-   "stability": "Stable",
-   "sourceImage": "https://mm2values.com/img/Bat_Zombie.png",
-   "image": "data/img/img-bat-zombie.png"
   },
   {
    "id": "godly-sweet",
@@ -2614,10 +2614,10 @@
    "name": "Candy",
    "category": "Godly",
    "tier": "TIER 4",
-   "value": 90,
-   "valueText": "90",
+   "value": 95,
+   "valueText": "95",
    "range": "N/A",
-   "demand": 2.5,
+   "demand": 3,
    "rarity": null,
    "stability": "Stable",
    "sourceImage": "https://mm2values.com/img/Updated_Candy.png",
@@ -7986,5 +7986,198 @@
    "image": "data/img/img-skeletonkey2018up.png"
   }
  ],
- "changeLog": []
+ "changeLog": [
+  {
+   "date": "2026-11-22T21:53:21+00:00",
+   "siteUpdated": "11/22/2026 02:11:44pm EST",
+   "changes": [
+    {
+     "id": "ancient-celestial",
+     "name": "Celestial",
+     "from": 1950,
+     "to": 1975
+    },
+    {
+     "id": "ancient-vampires-axe",
+     "name": "Vampires Axe",
+     "from": 1200,
+     "to": 1150
+    },
+    {
+     "id": "ancient-emberbow",
+     "name": "Emberbow",
+     "from": 675,
+     "to": 625
+    },
+    {
+     "id": "ancient-emberscythe",
+     "name": "Emberscythe",
+     "from": 685,
+     "to": 625
+    },
+    {
+     "id": "ancient-harvester",
+     "name": "Harvester",
+     "from": 290,
+     "to": 305
+    },
+    {
+     "id": "ancient-icepiercer",
+     "name": "Icepiercer",
+     "from": 200,
+     "to": 215
+    },
+    {
+     "id": "ancient-icebreaker",
+     "name": "Icebreaker",
+     "from": 70,
+     "to": 65
+    },
+    {
+     "id": "chroma-chroma-evergun",
+     "name": "Chroma Evergun",
+     "from": 50000,
+     "to": 52000
+    },
+    {
+     "id": "chroma-chroma-evergreen",
+     "name": "Chroma Evergreen",
+     "from": 36000,
+     "to": 41000
+    },
+    {
+     "id": "chroma-chroma-alienbeam",
+     "name": "Chroma Alienbeam",
+     "from": 18000,
+     "to": 18500
+    },
+    {
+     "id": "chroma-chroma-snowcannon",
+     "name": "Chroma Snowcannon",
+     "from": 7650,
+     "to": 7750
+    },
+    {
+     "id": "chroma-chroma-emberscythe",
+     "name": "Chroma Emberscythe",
+     "from": 10000,
+     "to": 6000
+    },
+    {
+     "id": "chroma-chroma-emberbow",
+     "name": "Chroma Emberbow",
+     "from": 6250,
+     "to": 5250
+    },
+    {
+     "id": "chroma-chroma-embersickle",
+     "name": "Chroma Embersickle",
+     "from": 1900,
+     "to": 1850
+    },
+    {
+     "id": "chroma-chroma-treat",
+     "name": "Chroma Treat",
+     "from": 1800,
+     "to": 1775
+    },
+    {
+     "id": "chroma-chroma-sweet",
+     "name": "Chroma Sweet",
+     "from": 1750,
+     "to": 1725
+    },
+    {
+     "id": "chroma-chroma-mortal",
+     "name": "Chroma Mortal",
+     "from": 1800,
+     "to": 1600
+    },
+    {
+     "id": "chroma-chroma-immortal",
+     "name": "Chroma Immortal",
+     "from": 1800,
+     "to": 1600
+    },
+    {
+     "id": "chroma-chroma-icecream",
+     "name": "Chroma Icecream",
+     "from": 1550,
+     "to": 1500
+    },
+    {
+     "id": "chroma-chroma-sands",
+     "name": "Chroma Sands",
+     "from": 850,
+     "to": 800
+    },
+    {
+     "id": "chroma-chroma-beachy",
+     "name": "Chroma Beachy",
+     "from": 800,
+     "to": 750
+    },
+    {
+     "id": "godly-travelers-gun",
+     "name": "Travelers Gun",
+     "from": 4400,
+     "to": 4300
+    },
+    {
+     "id": "godly-evergun",
+     "name": "Evergun",
+     "from": 3425,
+     "to": 3525
+    },
+    {
+     "id": "godly-evergreen",
+     "name": "Evergreen",
+     "from": 2725,
+     "to": 2800
+    },
+    {
+     "id": "godly-vampires-gun",
+     "name": "Vampires Gun",
+     "from": 1900,
+     "to": 1875
+    },
+    {
+     "id": "godly-sunrise",
+     "name": "Sunrise",
+     "from": 775,
+     "to": 800
+    },
+    {
+     "id": "godly-bauble",
+     "name": "Bauble",
+     "from": 700,
+     "to": 775
+    },
+    {
+     "id": "godly-soul",
+     "name": "Soul",
+     "from": 500,
+     "to": 480
+    },
+    {
+     "id": "godly-spirit",
+     "name": "Spirit",
+     "from": 490,
+     "to": 470
+    },
+    {
+     "id": "godly-bat",
+     "name": "Bat",
+     "from": 150,
+     "to": 155
+    },
+    {
+     "id": "godly-candy",
+     "name": "Candy",
+     "from": 90,
+     "to": 95
+    }
+   ]
+  }
+ ]
 }
