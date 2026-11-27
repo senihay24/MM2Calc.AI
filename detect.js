@@ -282,6 +282,120 @@
     return out.length - loose * 0.5;
   }
 
+  /** Cluster sorted numbers that are within tol of each other; returns centers. */
+  function clusters(vals, tol) {
+    const s = [...vals].sort((a, b) => a - b), out = [];
+    for (const v of s) {
+      const last = out[out.length - 1];
+      if (last && v - last.max <= tol) { last.sum += v; last.n++; last.max = v; }
+      else out.push({ sum: v, n: 1, max: v });
+    }
+    return out.map((c) => c.sum / c.n);
+  }
+
+  /** Spacing between neighbouring rows/columns, or 0 if there's only one. */
+  function pitchOf(centers, size) {
+    if (centers.length < 2) return 0;
+    const diffs = [];
+    for (let i = 1; i < centers.length; i++) diffs.push(centers[i] - centers[i - 1]);
+    const base = Math.min(...diffs.filter((d) => d > size * 0.6));
+    if (!isFinite(base)) return 0;
+    const unit = diffs.map((d) => d / Math.max(1, Math.round(d / base)));
+    return median(unit);
+  }
+
+  /*
+   * Inventories are grids. Once a few slots are found, work out the grid's
+   * spacing and add the slots that weren't picked up (e.g. a slot whose
+   * border blends in, or one cut by the screenshot's edge). Added slots are
+   * marked "inferred": the scanner only keeps them if it can read a real
+   * item name in them, so empty space and UI never become items.
+   */
+  function completeGrid(cells, W, H) {
+    if (cells.length < 3) return cells;
+    const cw = median(cells.map((c) => c.w)), ch = median(cells.map((c) => c.h));
+    const xs = clusters(cells.map((c) => c.x), cw * 0.25), ys = clusters(cells.map((c) => c.y), ch * 0.25);
+    const px = pitchOf(xs, cw), py = pitchOf(ys, ch);
+    if (!px && !py) return cells;
+    // Check the found slots really sit on one grid.
+    const onGrid = (v, origin, p) => !p || Math.abs((v - origin) / p - Math.round((v - origin) / p)) < 0.15;
+    const ox = xs[0], oy = ys[0];
+    const fit = cells.filter((c) => onGrid(c.x, ox, px) && onGrid(c.y, oy, py)).length;
+    if (fit < cells.length * 0.7) return cells;
+    const colPos = [], rowPos = [];
+    if (px) { for (let x = ox - Math.floor(ox / px) * px; x + cw * 0.75 <= W; x += px) colPos.push(x); } else colPos.push(...xs);
+    if (py) { for (let y = oy - Math.floor(oy / py) * py; y <= H; y += py) rowPos.push(y); } else rowPos.push(...ys);
+    // Don't invent a huge grid from a couple of slots.
+    if (colPos.length * rowPos.length > Math.max(12, cells.length * 4)) return cells;
+    const out = [...cells];
+    for (const y of rowPos) for (const x of colPos) {
+      const c = { x, y, w: cw, h: ch };
+      if (out.some((o) => Math.abs(o.x - x) < cw * 0.4 && Math.abs(o.y - y) < ch * 0.4)) continue;
+      // The name bar (bottom part) must be on screen; a cut-off top is fine.
+      const x0 = Math.max(0, x), x1 = Math.min(W, x + cw), y0 = Math.max(0, y), y1 = Math.min(H, y + ch);
+      if (x1 - x0 < cw * 0.85 || y + ch > H + ch * 0.03 || y1 - y0 < ch * 0.75) continue;
+      out.push({ x: x0, y: y0, w: x1 - x0, h: Math.min(H, y + ch) - y0, inferred: true });
+    }
+    return out;
+  }
+
+  /*
+   * MM2 prints every item's name on a colored bar (pink, purple, green,
+   * cyan...) with white letters. Find those bars directly: wide, filled
+   * rectangles of one strong color plus white text. The Chroma tag looks
+   * similar but is rainbow-colored and shorter, so it's skipped.
+   * Each bar gives one slot: the square area above it plus the bar.
+   */
+  function findBars(data, w, h) {
+    const m = new Uint8Array(w * h);
+    for (let i = 0; i < w * h; i++) {
+      const r = data[i * 4], g = data[i * 4 + 1], b = data[i * 4 + 2];
+      const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+      const sat = mx ? (mx - mn) / mx : 0;
+      if ((sat > 0.45 && mx > 90) || (mx > 200 && mx - mn < 50)) m[i] = 1; // bar color or white letters
+    }
+    // Close small gaps (letter outlines) so a bar is one solid piece.
+    const r = Math.max(1, Math.round(Math.min(w, h) * 0.004));
+    const bgMask = new Uint8Array(w * h);
+    for (let i = 0; i < w * h; i++) bgMask[i] = m[i] ? 0 : 1;
+    const closed = dilateFg(bgMask, w, h, r);
+    const bars = [];
+    for (const b of islands(closed, w, h)) {
+      const bx = { x: b.x + r, y: b.y + r, w: b.w - 2 * r, h: b.h - 2 * r };
+      if (bx.w < Math.max(40, w * 0.06) || bx.h < 10) continue;
+      const aspect = bx.w / bx.h;
+      if (aspect < 2.6 || aspect > 10 || b.fill < 0.7) continue;
+      // Count colors and white text inside.
+      const bins = new Array(12).fill(0);
+      let white = 0, colored = 0, n = 0;
+      for (let y = bx.y; y < bx.y + bx.h; y += 2) for (let x = bx.x; x < bx.x + bx.w; x += 2) {
+        const i = (y * w + x) * 4, R = data[i], G = data[i + 1], B = data[i + 2];
+        const mx = Math.max(R, G, B), mn = Math.min(R, G, B);
+        n++;
+        if (mx > 200 && mx - mn < 50) { white++; continue; }
+        if (mx > 90 && (mx - mn) / mx > 0.45) {
+          colored++;
+          let hh = mx === R ? ((G - B) / (mx - mn)) % 6 : mx === G ? (B - R) / (mx - mn) + 2 : (R - G) / (mx - mn) + 4;
+          bins[Math.floor(((hh * 60 + 360) % 360) / 30)]++;
+        }
+      }
+      if (!n || white / n < 0.05 || white / n > 0.6 || colored / n < 0.3) continue;
+      const hues = bins.filter((v) => v > colored * 0.06).length;
+      if (hues >= 5) continue; // rainbow = Chroma tag, not a name bar
+      bars.push(bx);
+    }
+    // A bar with a much wider bar right under it is a tag, not a name bar.
+    return bars.filter((a) => !bars.some((b) => b !== a && b.y > a.y && b.w > a.w * 1.4 &&
+      b.y - (a.y + a.h) < a.h * 1.5 && Math.abs(b.x - a.x) < a.w * 0.2));
+  }
+
+  function slotFromBar(bar, W, H) {
+    const sw = bar.w / 0.94, sh = sw * 1.3;
+    const x = Math.max(0, bar.x - bar.w * 0.03), bottom = Math.min(H, bar.y + bar.h + sw * 0.02);
+    const y = Math.max(0, bottom - sh);
+    return { x, y, w: Math.min(W, x + sw) - x, h: bottom - y, bar };
+  }
+
   function detectSlots(img) {
     const { data, w, h, scale } = getPixels(img);
     const minSide = Math.max(28, Math.min(w, h) * 0.05);
@@ -290,7 +404,18 @@
       const cand = slotsFromMask(data, w, h, m, minSide, false);
       if (cand.length >= 3 && consistency(cand) > consistency(best)) best = cand;
     }
-    let out = best.map((b) => ({ x: b.x / scale, y: b.y / scale, w: b.w / scale, h: b.h / scale }));
+    // Name bars: the most reliable sign of an MM2 slot.
+    const barSlots = findBars(data, w, h).map((b) => slotFromBar(b, w, h));
+    if (barSlots.length) {
+      const holds = (o, s) => { const cx = s.bar.x + s.bar.w / 2, cy = s.bar.y + s.bar.h / 2;
+        return cx > o.x && cx < o.x + o.w && cy > o.y && cy < o.y + o.h; };
+      // Boxes that contain a bar are replaced by the bar's slot; boxes without one stay
+      // (grey name bars, or non-MM2 layouts), but loose shapes are dropped.
+      best = best.filter((o) => !o.loose && !barSlots.some((s) => holds(o, s))).concat(barSlots);
+    }
+    if (!best.some((b) => b.loose)) best = completeGrid(best, w, h);
+    const sc = (b) => b && ({ x: b.x / scale, y: b.y / scale, w: b.w / scale, h: b.h / scale });
+    let out = best.map((b) => ({ ...sc(b), inferred: !!b.inferred, bar: sc(b.bar) }));
     const rowTol = median(out.map((b) => b.h)) * 0.5 || 10;
     out.sort((a, b) => (Math.abs(a.y - b.y) < rowTol ? a.x - b.x : a.y - b.y));
     return out;

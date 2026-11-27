@@ -12,7 +12,6 @@
   "use strict";
 
   const MIN_PICTURE_SCORE = 0.56;   // picture-only matches below this are dropped
-  const MIN_NAME_SIM = 0.72;        // how close the read name must be to a real name
   const UI_WORDS = /^(view|redeem|invite|search|craft|crafting|enter ?code|weapons|effects|powers|emotes|radios|pets|on|off|trade|accept|decline|cancel|ready)$/i;
 
   const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
@@ -33,22 +32,28 @@
   }
   const similarity = (a, b) => 1 - levenshtein(a, b) / Math.max(a.length, b.length, 1);
 
-  /** Items whose name matches the text read from the slot, best first. */
+  /*
+   * Items whose name matches the text read from the slot, best first.
+   * Spaces are ignored ("Icewing" = "Ice Wing", "Swirly Axe" = "SwirlyAxe").
+   * Short names must match exactly; longer ones may have 1-2 misread letters.
+   * The Chroma tag is shown separately in the game, so "Laser" + tag = "Chroma Laser".
+   */
   function nameMatches(text, chroma, items) {
-    const t = norm(text);
-    if (t.length < 2) return [];
-    const scored = [];
+    const t = norm(text).replace(/ /g, "");
+    if (t.length < 3) return [];
+    const allowed = (n) => (n <= 5 ? 0 : n <= 11 ? 1 : 2);
+    const out = [];
     for (const it of items) {
       const n = norm(it.name);
       const isChroma = it.category === "Chroma" || n.startsWith("chroma ");
-      const plain = n.replace(/^chroma /, "");
-      let sim = similarity(t, plain);
-      // The tag is shown separately in the game, so "Laser" + tag = "Chroma Laser".
-      if (chroma && !isChroma) sim -= 0.15;
-      if (!chroma && isChroma) sim -= 0.15;
-      if (sim >= MIN_NAME_SIM - 0.15) scored.push({ id: it.id, sim });
+      const plain = n.replace(/^chroma /, "").replace(/ /g, "");
+      if (Math.abs(plain.length - t.length) > 2) continue;
+      const d = levenshtein(t, plain);
+      if (d > allowed(Math.max(t.length, plain.length))) continue;
+      out.push({ id: it.id, d, chromaOk: isChroma === !!chroma, sim: 1 - d / Math.max(t.length, plain.length) });
     }
-    return scored.sort((a, b) => b.sim - a.sim);
+    // Right chroma-ness first, then fewest differences.
+    return out.sort((a, b) => (b.chromaOk - a.chromaOk) || (a.d - b.d));
   }
 
   function pictureScores(img, box, refs) {
@@ -82,6 +87,11 @@
     }
 
     const found = [], unknown = [];
+    // In a real MM2 screenshot every slot has a name bar. If any name was
+    // read, slots without one are empty space or UI, so don't picture-guess them.
+    // Very unsure reads are dropped entirely; fairly unsure ones count only if they match an item.
+    reads.forEach((r) => { if (r.name && (r.conf ?? 100) < 20) r.name = ""; });
+    const anyName = reads.some((r) => r.name && nameMatches(r.name, r.chroma, items).length);
     boxes.forEach((box, k) => {
       const r = reads[k];
       const byName = nameMatches(r.name, r.chroma, items);
@@ -89,9 +99,9 @@
       let pics = null;
       const getPics = () => (pics = pics || pictureScores(img, box, refs));
 
-      if (best && best.sim >= MIN_NAME_SIM) {
-        // Several items with (almost) the same name: let the picture choose.
-        const tied = byName.filter((c) => c.sim >= best.sim - 0.02);
+      if (best) {
+        // Several items with the same name (e.g. "Laser" in three lists): the picture decides.
+        const tied = byName.filter((c) => c.d === best.d && c.chromaOk === best.chromaOk);
         let id = best.id;
         if (tied.length > 1) {
           const ps = new Map(getPics().map((p) => [p.id, p.score]));
@@ -99,19 +109,18 @@
         }
         const alts = [...new Set([id, ...byName.slice(0, 5).map((c) => c.id), ...getPics().slice(0, 6).map((p) => p.id)])].slice(0, 8);
         found.push({ box, id, count: r.count || 1, how: "name", read: r.name,
-          sure: best.sim >= 0.85 && tied.length === 1, alts });
+          sure: best.d === 0 && best.chromaOk && tied.length === 1, alts });
         return;
       }
+      if (box.inferred) return; // grid-filled slot without a readable item name: skip
       const readable = norm(r.name);
-      if (readable.length >= 3 && !UI_WORDS.test(readable)) {
-        // There's a name, but it isn't on MM2Values (or was misread badly).
-        const ps = getPics();
-        if (ps[0] && ps[0].score >= 0.8) {
-          found.push({ box, id: ps[0].id, count: r.count || 1, how: "picture", read: r.name, sure: false, alts: ps.slice(0, 8).map((p) => p.id) });
-        } else unknown.push((r.chroma ? "Chroma " : "") + r.name);
+      if (readable.length >= 3 && !UI_WORDS.test(readable) && (r.conf ?? 100) >= 50) {
+        // A clear name that isn't on MM2Values: report it, don't guess.
+        unknown.push((r.chroma ? "Chroma " : "") + r.name);
         return;
       }
       if (readable.length) return; // UI button text like "View"
+      if (anyName) return;
       // No name bar at all (other screens / layouts): use the picture.
       const ps = getPics();
       if (ps[0] && ps[0].score >= MIN_PICTURE_SCORE) {

@@ -7,7 +7,8 @@
 (function (global) {
   "use strict";
 
-  const BASE = "vendor/tesseract/";
+  // The reader files sit next to index.html.
+  const BASE = "./";
   let workerPromise = null;
 
   function loadScript(src) {
@@ -111,7 +112,9 @@
 
   /** Is there a rainbow "Chroma" tag just above the name bar? */
   function hasChromaTag(img, b) {
-    const box = { x: b.x + b.w * 0.02, y: b.y + b.h * 0.64, w: b.w * 0.6, h: b.h * 0.16 };
+    // The tag sits just above the name bar, on the left.
+    const box = b.bar ? { x: b.bar.x, y: Math.max(0, b.bar.y - b.bar.h * 1.05), w: b.bar.w * 0.6, h: b.bar.h }
+      : { x: b.x + b.w * 0.02, y: b.y + b.h * 0.64, w: b.w * 0.6, h: b.h * 0.16 };
     const w = 60, h = Math.max(8, Math.round(60 * box.h / box.w));
     const c = document.createElement("canvas");
     c.width = w; c.height = h;
@@ -143,12 +146,14 @@
     await worker.setParameters(NAME_PARAMS);
     for (let i = 0; i < boxes.length; i++) {
       const b = boxes[i];
-      const strip = { x: b.x + b.w * 0.03, y: b.y + b.h * 0.79, w: b.w * 0.94, h: b.h * 0.19 };
+      const strip = b.bar || { x: b.x + b.w * 0.03, y: b.y + b.h * 0.79, w: b.w * 0.94, h: b.h * 0.19 };
       try {
         const { data } = await worker.recognize(prepare(img, strip, { inset: false, height: 70 }));
         const text = (data.text || "").replace(/\s+/g, " ").trim();
         // Only trust it as a name if it has real words and the reader is fairly sure.
-        if (/[A-Za-z]{3,}/.test(text) && (data.confidence ?? 100) >= 45) out[i].name = text;
+        // Keep anything word-like with how sure the reader was; the scanner
+        // decides (a low-confidence read is only used if it matches a real item).
+        if (/[A-Za-z]{3,}/.test(text)) { out[i].name = text; out[i].conf = data.confidence ?? 100; }
       } catch (e) { /* unreadable */ }
       if (onProgress) onProgress(i + 1, boxes.length * 2);
     }

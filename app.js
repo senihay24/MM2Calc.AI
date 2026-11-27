@@ -102,7 +102,7 @@
         </button>
         <div class="mid">
           <button type="button" class="nm link-like" data-act="change">${esc(r.name)}${needsCheck ? ` <span class="badge">Check</span>` : ""}</button>
-          <div class="sub">${esc(r.category)} · ${fmt(r.unit)} each${r.counted ? "" : ` · <i>${esc(r.reason)}</i>`}</div>
+          <div class="sub">${esc(r.category)} · Value: ${fmt(r.unit)} each${r.counted ? "" : ` · <i>${esc(r.reason)}</i>`}</div>
           <div class="stepper">
             <button type="button" data-act="dec" aria-label="One fewer">−</button>
             <input type="number" min="0" inputmode="numeric" value="${r.qty}" aria-label="How many">
